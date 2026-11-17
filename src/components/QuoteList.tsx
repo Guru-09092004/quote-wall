@@ -22,7 +22,11 @@ export function QuoteList({ quotes }: QuoteListProps) {
           <footer>
             <span>{quote.author_name}</span>
             <time dateTime={quote.created_at}>
-              {new Date().toLocaleDateString()}
+              {new Date(quote.created_at).toLocaleDateString(undefined, {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
             </time>
           </footer>
         </article>

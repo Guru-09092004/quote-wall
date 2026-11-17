@@ -1,4 +1,7 @@
 import { useState, type FormEvent } from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 type LoginProps = {
   onLogin: (email: string, password: string) => Promise<void>
@@ -72,10 +75,11 @@ export function Login({ onLogin, onRegister }: LoginProps) {
       </p>
       <form className="stack" onSubmit={handleSubmit}>
         {isRegistering && (
-          <label>
-            Name
-            <input
+          <div className="field">
+            <Label htmlFor="display-name">Name</Label>
+            <Input
               autoComplete="name"
+              id="display-name"
               name="name"
               maxLength={80}
               onChange={(event) => setDisplayName(event.target.value)}
@@ -83,12 +87,13 @@ export function Login({ onLogin, onRegister }: LoginProps) {
               required
               value={displayName}
             />
-          </label>
+          </div>
         )}
-        <label>
-          Email
-          <input
+        <div className="field">
+          <Label htmlFor="email">Email</Label>
+          <Input
             autoComplete="email"
+            id="email"
             name="email"
             onChange={(event) => setEmail(event.target.value)}
             placeholder="you@example.com"
@@ -96,11 +101,12 @@ export function Login({ onLogin, onRegister }: LoginProps) {
             type="email"
             value={email}
           />
-        </label>
-        <label>
-          Password
-          <input
+        </div>
+        <div className="field">
+          <Label htmlFor="password">Password</Label>
+          <Input
             autoComplete={isRegistering ? 'new-password' : 'current-password'}
+            id="password"
             name="password"
             minLength={6}
             onChange={(event) => setPassword(event.target.value)}
@@ -109,7 +115,7 @@ export function Login({ onLogin, onRegister }: LoginProps) {
             type="password"
             value={password}
           />
-        </label>
+        </div>
         {error && (
           <p className="notice error" role="alert">
             {error}
@@ -120,20 +126,26 @@ export function Login({ onLogin, onRegister }: LoginProps) {
             {message}
           </p>
         )}
-        <button className="auth-submit" disabled={isSubmitting} type="submit">
+        <Button className="auth-submit" disabled={isSubmitting} type="submit">
           {isSubmitting
             ? 'Please wait...'
             : isRegistering
               ? 'Create account'
               : 'Log in'}
-        </button>
+        </Button>
       </form>
       <p className="switch-mode">
         {isRegistering ? 'Already have an account?' : 'New to QuoteWall?'}
         {' '}
-        <button className="text-button" onClick={switchMode} type="button">
+        <Button
+          className="switch-button"
+          onClick={switchMode}
+          size="sm"
+          type="button"
+          variant="ghost"
+        >
           {isRegistering ? 'Log in' : 'Create an account'}
-        </button>
+        </Button>
       </p>
     </section>
   )

@@ -1,4 +1,7 @@
 import { useState, type FormEvent } from 'react'
+import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 
 type QuoteFormProps = {
   onPost: (content: string) => Promise<void>
@@ -42,8 +45,8 @@ export function QuoteForm({ onPost }: QuoteFormProps) {
     <section className="quote-form-card" aria-labelledby="quote-form-title">
       <h2 id="quote-form-title">Share a quote</h2>
       <form className="stack" onSubmit={handleSubmit}>
-        <label htmlFor="quote-content">What would you like to share?</label>
-        <textarea
+        <Label htmlFor="quote-content">What would you like to share?</Label>
+        <Textarea
           id="quote-content"
           maxLength={300}
           onChange={(event) => setContent(event.target.value)}
@@ -52,10 +55,12 @@ export function QuoteForm({ onPost }: QuoteFormProps) {
           value={content}
         />
         <div className="form-footer">
-          <span className="muted">{content.length + 1}/300</span>
-          <button disabled={isSubmitting} type="submit">
+          <span className="character-count" aria-live="polite">
+            {content.length}/300
+          </span>
+          <Button disabled={isSubmitting || !content.trim()} type="submit">
             {isSubmitting ? 'Posting...' : 'Post'}
-          </button>
+          </Button>
         </div>
         {error && <p className="notice error" role="alert">{error}</p>}
       </form>

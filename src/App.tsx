@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { User } from '@supabase/supabase-js'
+import { Button } from '@/components/ui/button'
 import { Login } from './components/Login'
 import { QuoteForm } from './components/QuoteForm'
 import { QuoteList, type Quote } from './components/QuoteList'
@@ -128,9 +129,16 @@ export default function App() {
     return (
       <main className="page">
         <header className="site-header">
-          <h1>QuoteWall</h1>
+          <p className="site-name">QuoteWall</p>
         </header>
-        <p className="notice error">
+        <section className="intro">
+          <p className="eyebrow">A COMMONPLACE FOR GOOD WORDS</p>
+          <h1>Words worth keeping.</h1>
+          <p className="intro-copy">
+            A quiet place to collect the lines that stay with you.
+          </p>
+        </section>
+        <p className="notice error" role="alert">
           Supabase is not configured. Copy <code>.env.example</code> to{' '}
           <code>.env</code>, add your project URL and anon key, and restart Vite.
         </p>
@@ -141,20 +149,32 @@ export default function App() {
   return (
     <main className="page">
       <header className="site-header">
-        <div>
-          <h1>QuoteWall</h1>
-        </div>
+        <p className="site-name">QuoteWall</p>
         {!authLoading && user && (
           <div className="user-actions">
-            <span className="muted">
+            <span className="user-name">
               {user.user_metadata.display_name || user.email}
             </span>
-            <button className="secondary-button" onClick={handleLogout}>
+            <Button
+              className="logout-button"
+              size="sm"
+              variant="ghost"
+              onClick={handleLogout}
+              type="button"
+            >
               Log out
-            </button>
+            </Button>
           </div>
         )}
       </header>
+
+      <section className="intro">
+        <p className="eyebrow">A COMMONPLACE FOR GOOD WORDS</p>
+        <h1>Words worth keeping.</h1>
+        <p className="intro-copy">
+          A quiet place to collect the lines that stay with you.
+        </p>
+      </section>
 
       {authLoading ? (
         <p className="muted">Checking your account...</p>
@@ -166,7 +186,11 @@ export default function App() {
 
       <section className="feed" aria-labelledby="feed-title">
         <h2 id="feed-title">Latest quotes</h2>
-        {feedError && <p className="notice error" role="alert">{feedError}</p>}
+        {feedError && (
+          <p className="notice error" role="alert">
+            {feedError}
+          </p>
+        )}
         {quotesLoading ? (
           <p className="muted">Loading quotes...</p>
         ) : (
